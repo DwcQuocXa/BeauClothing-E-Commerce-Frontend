@@ -17,9 +17,9 @@ export default makeStyles(() => {
         margin: theme.spacing(1),
       },
       position: "absolute",
-      top: "35%",
+      top: "48%",
       left: "45%",
-      transform: "translate(-50%, -50%)",
+      transform: "translate(-60%, -50%)",
     },
     avatar: {
       margin: theme.spacing(1),
@@ -38,9 +38,16 @@ export default makeStyles(() => {
     },
     googleButton: {
       marginBottom: theme.spacing(2),
+      backgroundColor: "black",
+      "&:hover": {
+        backgroundColor: "#565656",
+      },
     },
-    alreadyHaveAccountGrid: {
+    alreadyAccountGrid: {
       justify: "flex-end",
+    },
+    alreadyAccountBtn: {
+      color: "black",
     },
   };
 });

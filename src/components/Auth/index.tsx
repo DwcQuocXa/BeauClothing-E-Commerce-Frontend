@@ -12,6 +12,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import useStyle from "./style";
 import Input from "./Input";
 import Icon from "./Icon";
+import {
+  GoogleLogin,
+  GoogleLoginResponse,
+  GoogleLoginResponseOffline,
+} from "react-google-login";
 
 const Auth = () => {
   const classes = useStyle();
@@ -42,6 +47,22 @@ const Auth = () => {
   const switchMode = () => {
     setIsSignUp(!isSignUp);
     setShowPass(false);
+  };
+
+  const googleSuccess = (
+    res: GoogleLoginResponse | GoogleLoginResponseOffline
+  ) => {
+    const result = (res as GoogleLoginResponse)?.profileObj;
+    const token = (res as GoogleLoginResponse)?.tokenId;
+    try {
+      console.log("result", result);
+      console.log("token", token);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const googleFailure = () => {
+    console.log("Google Sign In was unsuccessful. Try Again Later!!");
   };
 
   return (
@@ -102,10 +123,30 @@ const Auth = () => {
           >
             {isSignUp ? "Sign Up" : "Sign In"}
           </Button>
-
-          <Grid container className={classes.alreadyHaveAccountGrid}>
+          <GoogleLogin
+            clientId="634958478111-32garfk7ttd62rvjpp3tqmp0f58ijdsn.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <Button
+                className={classes.googleButton}
+                color="primary"
+                fullWidth
+                onClick={renderProps.onClick}
+                startIcon={<Icon />}
+                variant="contained"
+              >
+                Google Sign In
+              </Button>
+            )}
+            onSuccess={googleSuccess}
+            onFailure={googleFailure}
+            cookiePolicy="single_host_origin"
+          />
+          <Grid container className={classes.alreadyAccountGrid}>
             <Grid item>
-              <Button onClick={switchMode} sx={{ color: "black" }}>
+              <Button
+                onClick={switchMode}
+                className={classes.alreadyAccountBtn}
+              >
                 {isSignUp
                   ? "Already have an account? Sign in"
                   : "Don't have an account? Sign Up"}

@@ -37,13 +37,18 @@ export default function NavBar() {
         >
           BEAU
         </Link>
-        <Button
-          variant="outlined"
-          color="inherit"
-          startIcon={<AccountBoxOutlinedIcon />}
-        >
-          Sign In
-        </Button>
+        {location.pathname !== "/auth" && (
+          <Link to="/auth" style={{ textDecoration: "none" }}>
+            <Button
+              variant="outlined"
+              color="inherit"
+              sx={{ color: "black" }}
+              startIcon={<AccountBoxOutlinedIcon />}
+            >
+              Sign In
+            </Button>
+          </Link>
+        )}
       </Toolbar>
     </AppBar>
   );
