@@ -8,6 +8,7 @@ import {
   Container,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import axios from "axios";
 
 import useStyle from "./style";
 import Input from "./Input";
@@ -17,6 +18,7 @@ import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
+import { baseURL } from "../../types";
 
 const Auth = () => {
   const classes = useStyle();
@@ -49,14 +51,25 @@ const Auth = () => {
     setShowPass(false);
   };
 
-  const googleSuccess = (
-    res: GoogleLoginResponse | GoogleLoginResponseOffline
+  const googleSuccess = async (
+    response: GoogleLoginResponse | GoogleLoginResponseOffline | any
   ) => {
-    const result = (res as GoogleLoginResponse)?.profileObj;
-    const token = (res as GoogleLoginResponse)?.tokenId;
+    const result = (response as GoogleLoginResponse)?.profileObj;
+    const id_token = (response as any)?.tokenObj.id_token;
+    //const token = (response as GoogleLoginResponse)?.tokenId;
+    // let res = await axios.post(`${baseURL}/users/google-authenticate`, {
+    //   id_token: id_token,
+    // });
+    console.log("result", result);
+    console.log(id_token);
+    let res = await axios.post(`${baseURL}/users/google-authenticate`, {
+      id_token: response.tokenObj.id_token,
+    });
+    console.log(res);
     try {
       console.log("result", result);
-      console.log("token", token);
+      console.log(id_token);
+      //console.log(res);
     } catch (error) {
       console.log(error);
     }

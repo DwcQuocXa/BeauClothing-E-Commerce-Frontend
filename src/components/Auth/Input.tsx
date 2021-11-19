@@ -13,7 +13,7 @@ type UserInputProps = {
   label?: string;
   autoFocus?: boolean | undefined;
   type?: string;
-  handleShowPass?: React.MouseEventHandler<HTMLAnchorElement> | undefined;
+  handleShowPass?: React.MouseEventHandler<HTMLAnchorElement>;
 };
 
 const Input = ({
