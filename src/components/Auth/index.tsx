@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import useStyle from "./style";
 import Input from "./Input";
@@ -18,11 +20,12 @@ import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
-import { baseURL } from "../../types";
+import { baseURL, FormData } from "../../types";
+import { sendSignUpRequest, sendSignInRequest } from "../../redux/actions/auth";
 
 const Auth = () => {
   const classes = useStyle();
-  const initialState = {
+  const initialState: FormData = {
     firstName: "",
     lastName: "",
     email: "",
@@ -33,6 +36,9 @@ const Auth = () => {
   const [showPass, setShowPass] = useState(false);
   const [formData, setFormData] = useState(initialState);
 
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const handleChange = (e: React.ChangeEvent<any>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -40,6 +46,11 @@ const Auth = () => {
   const handleSubmit = (e: React.ChangeEvent<any>) => {
     e.preventDefault();
     console.log(formData);
+    if (isSignUp) {
+      dispatch(sendSignUpRequest(formData, history));
+    } else {
+      dispatch(sendSignInRequest(formData, history));
+    }
   };
 
   const handleShowPass = () => {
@@ -56,10 +67,6 @@ const Auth = () => {
   ) => {
     const result = (response as GoogleLoginResponse)?.profileObj;
     const id_token = (response as any)?.tokenObj.id_token;
-    //const token = (response as GoogleLoginResponse)?.tokenId;
-    // let res = await axios.post(`${baseURL}/users/google-authenticate`, {
-    //   id_token: id_token,
-    // });
     console.log("result", result);
     console.log(id_token);
     let res = await axios.post(`${baseURL}/users/google-authenticate`, {

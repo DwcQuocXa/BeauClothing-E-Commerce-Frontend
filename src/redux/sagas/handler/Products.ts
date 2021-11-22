@@ -1,10 +1,10 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 
-import { requestGetProducts } from "../request/requestProducts";
+import { requestGetProducts } from "../request/Products";
 import { GetProductsAction, GET_ALL_PRODUCTS } from "../../../types";
 import { setProducts } from "../../actions";
 
-function* handleGetCountries(action: GetProductsAction) {
+function* handleGetProducts(action: GetProductsAction) {
   try {
     const { data } = yield call(requestGetProducts);
     yield put(setProducts(data));
@@ -13,4 +13,4 @@ function* handleGetCountries(action: GetProductsAction) {
   }
 }
 
-export default [takeLatest(GET_ALL_PRODUCTS, handleGetCountries)];
+export default [takeLatest(GET_ALL_PRODUCTS, handleGetProducts)];

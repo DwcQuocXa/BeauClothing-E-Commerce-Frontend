@@ -1,4 +1,9 @@
+import axios from "axios";
 export const baseURL = "http://localhost:5000/api/v1";
+
+export const API = axios.create({
+  baseURL: `${baseURL}`,
+});
 
 //PRODUCT
 
@@ -56,4 +61,41 @@ export type ProductsActions =
 export type ProductsState = {
   productsList: Product[];
   searchTerm: string;
+};
+
+export type FormData = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+};
+
+//USER
+export const SIGN_IN = "SIGN_IN";
+export const SIGN_UP = "SIGN_UP";
+export const LOG_OUT = "LOG_OUT";
+
+export type SignInAction = {
+  type: typeof SIGN_IN;
+  payload: {
+    data: FormData;
+  };
+};
+
+export type SignUpAction = {
+  type: typeof SIGN_UP;
+  payload: {
+    data: FormData;
+  };
+};
+
+export type LogOutAction = {
+  type: typeof LOG_OUT;
+};
+
+export type AuthActions = SignInAction | SignUpAction | LogOutAction;
+
+export type AuthState = {
+  user: FormData | null;
 };

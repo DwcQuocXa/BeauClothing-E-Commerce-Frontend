@@ -1,10 +1,12 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import createSagaMiddleware from "redux-saga";
+import thunk from "redux-thunk";
 
 import { rootSaga } from "./sagas/rootSaga";
 import reducers from "./reducers";
 
 const sagaMiddleware = createSagaMiddleware();
+const middlewares = [sagaMiddleware, thunk];
 let composeEnhancers = compose;
 
 if (process.env.NODE_ENV === "development") {
@@ -15,7 +17,7 @@ if (process.env.NODE_ENV === "development") {
 
 export const store = createStore(
   reducers(),
-  composeEnhancers(applyMiddleware(sagaMiddleware))
+  composeEnhancers(applyMiddleware(...middlewares))
 );
 
 sagaMiddleware.run(rootSaga);
