@@ -30,6 +30,7 @@ export default function auth(
       };
 
     case LOG_OUT:
+      localStorage.clear();
       return {
         ...state,
         user: null,

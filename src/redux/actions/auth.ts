@@ -35,7 +35,6 @@ export const sendSignUpRequest =
   (user: FormData, history: any) => async (dispatch: Dispatch) => {
     try {
       const { data } = await signUpRequest(user);
-      console.log(data);
       dispatch({
         type: SIGN_IN,
         payload: { data },

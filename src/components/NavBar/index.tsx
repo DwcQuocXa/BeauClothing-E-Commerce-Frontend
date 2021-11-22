@@ -1,11 +1,10 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
-import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 import { Link, useLocation } from "react-router-dom";
 
 import useStyles from "./style";
+import LogIn from "./Login";
 
 export default function NavBar() {
   const classes = useStyles();
@@ -37,18 +36,7 @@ export default function NavBar() {
         >
           BEAU
         </Link>
-        {location.pathname !== "/auth" && (
-          <Link to="/auth" style={{ textDecoration: "none" }}>
-            <Button
-              variant="outlined"
-              color="inherit"
-              sx={{ color: "black" }}
-              startIcon={<AccountBoxOutlinedIcon />}
-            >
-              Sign In
-            </Button>
-          </Link>
-        )}
+        <LogIn />
       </Toolbar>
     </AppBar>
   );
