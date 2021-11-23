@@ -71,7 +71,7 @@ export type FormData = {
   confirmPassword?: string;
 };
 
-//USER
+//AUTH
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_UP = "SIGN_UP";
 export const LOG_OUT = "LOG_OUT";
@@ -98,4 +98,24 @@ export type AuthActions = SignInAction | SignUpAction | LogOutAction;
 
 export type AuthState = {
   user: FormData | null;
+};
+
+//CART
+export const GET_CART = "GET_CART";
+
+export type CartProduct = {
+  _id: string;
+  product: Product;
+  quantity: number;
+};
+
+export type GetCartAction = {
+  type: typeof GET_CART;
+  payload: {
+    cart: CartProduct[];
+  };
+};
+
+export type CartState = {
+  cart: CartProduct[];
 };
