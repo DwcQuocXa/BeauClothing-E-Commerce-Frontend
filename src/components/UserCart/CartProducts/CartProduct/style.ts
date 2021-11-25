@@ -2,20 +2,28 @@ import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material/styles";
 
 export default makeStyles((theme: Theme) => ({
-  root: {
-    paddingTop: 100,
-    height: "100%",
-    width: "100%",
-  },
-  title: {
-    display: "flex",
-    justifyContent: "center",
-  },
-  button: {
-    minWidth: "176px",
-    maxWidth: "232px",
-    minHeight: "45px",
-    maxWeight: "60px",
+  card: {
     boxShadow: "none",
+  },
+  root: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  product: {
+    display: "flex",
+    justifyContent: "start",
+  },
+  img: {
+    height: 170,
+    paddingRight: 20,
+  },
+  quantity: {
+    display: "flex",
+    justifyContent: "start",
+  },
+  quantityNo: {
+    paddingTop: 7,
+    padding: "0px 20px",
+    fontSize: 20,
   },
 }));

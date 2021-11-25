@@ -1,13 +1,25 @@
 import { Paper, Typography, Divider, Button } from "@mui/material";
 import React from "react";
+import { CartProduct } from "../../../types";
 
 import useStyles from "./style";
 
-const CheckOut = () => {
+type CheckOutProps = {
+  cart: CartProduct[];
+};
+
+const CheckOut = ({ cart }: CheckOutProps) => {
   const classes = useStyles();
+
+  let sum = cart
+    .map((product) => product.quantity * product.product.price)
+    .reduce((a, b) => a + b, 0);
+
+  let totalPrice = (sum + 3.99).toFixed(2);
+
   return (
     <div>
-      <Paper variant="outlined">
+      <Paper className={classes.paper}>
         <div className={classes.inside}>
           <div className={classes.linePrice}>
             <Typography variant="h6" className={classes.text}>
@@ -29,7 +41,7 @@ const CheckOut = () => {
               Order value
             </Typography>
             <Typography variant="h6" className={classes.text}>
-              £17.99
+              £{sum.toFixed(2)}
             </Typography>
           </div>
           <div className={classes.linePrice}>
@@ -54,7 +66,7 @@ const CheckOut = () => {
               className={classes.text}
               sx={{ fontWeight: "bold" }}
             >
-              £21.98
+              £{totalPrice}
             </Typography>
           </div>
           <div className={classes.linePrice}>

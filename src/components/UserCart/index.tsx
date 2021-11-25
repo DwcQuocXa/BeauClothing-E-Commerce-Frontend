@@ -11,11 +11,6 @@ import useStyles from "./style";
 const UserCart = () => {
   const classes = useStyles();
   const cart = useAppSelector((state) => state.cart.cart);
-  const history = useHistory();
-
-  const countQuantity = (cart: CartProduct[]) => {};
-
-  const countTotalPrice = (cart: CartProduct[]) => {};
 
   return (
     <div className={classes.root}>
@@ -29,40 +24,11 @@ const UserCart = () => {
               <CartProducts cart={cart} />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <CheckOut />
+              <CheckOut cart={cart} />
             </Grid>
           </Grid>
         </Container>
       </Grow>
-      {/* <Grid container className="cart-price-wrapper">
-        <Grid item xs={4}>
-          <Button
-            variant="outlined"
-            color="secondary"
-            className={classes.button}
-            onClick={() => history.goBack()}
-          >
-            Go back
-          </Button>
-        </Grid>
-        <Grid item xs={4}>
-          <Typography variant="h5">
-            TOTAL: {countTotalPrice(cart)} EUR
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            * Including VAT
-          </Typography>
-        </Grid>
-        <Grid item xs={4}>
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.button}
-          >
-            Continue
-          </Button>
-        </Grid>
-      </Grid> */}
     </div>
   );
 };

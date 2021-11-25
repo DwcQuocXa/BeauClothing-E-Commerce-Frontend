@@ -16,4 +16,20 @@ export default makeStyles((theme: Theme) => ({
     color: "black",
     height: 80,
   },
+  logoBlack: {
+    textDecoration: "none",
+    color: "black",
+    flexGrow: 1,
+    fontWeight: 600,
+    fontFamily: "Lucida Console",
+    fontSize: 60,
+  },
+  logoWhite: {
+    textDecoration: "none",
+    color: "white",
+    flexGrow: 1,
+    fontWeight: 600,
+    fontFamily: "Lucida Console",
+    fontSize: 60,
+  },
 }));

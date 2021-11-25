@@ -24,15 +24,10 @@ export default function NavBar() {
         }
       >
         <Link
-          to="/products"
-          style={{
-            textDecoration: "none",
-            color: "inherit",
-            flexGrow: 1,
-            fontWeight: 600,
-            fontFamily: "Lucida Console",
-            fontSize: 60,
-          }}
+          to="/"
+          className={
+            classes[location.pathname === "/" ? "logoWhite" : "logoBlack"]
+          }
         >
           BEAU
         </Link>

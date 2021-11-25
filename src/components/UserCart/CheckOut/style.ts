@@ -2,6 +2,10 @@ import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material/styles";
 
 export default makeStyles((theme: Theme) => ({
+  paper: {
+    boxShadow: "none",
+    backgroundColor: "#fbf9f8",
+  },
   root: {
     paddingTop: 100,
     height: "100%",

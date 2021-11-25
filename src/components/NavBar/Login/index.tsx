@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import { Toolbar, Typography, Avatar, Button, IconButton } from "@mui/material";
+import {
+  Toolbar,
+  Typography,
+  Avatar,
+  Button,
+  IconButton,
+  Badge,
+} from "@mui/material";
 import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -9,6 +16,7 @@ import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 
 import useStyles from "./style";
 import { fetchCartRequest, logOut } from "../../../redux/actions";
+import { useAppSelector } from "../../../hooks/useAppDispatchAndSelector";
 
 export default function LogIn() {
   const classes = useStyles();
@@ -18,6 +26,10 @@ export default function LogIn() {
   const [user, setUser] = useState<any>(
     JSON.parse(localStorage.getItem("profile") || "null")
   );
+  const cart = useAppSelector((state) => state.cart.cart);
+  const totalQuantity = cart
+    .map((product) => product.quantity)
+    .reduce((a, b) => a + b, 0);
 
   const logout = () => {
     dispatch(logOut());
@@ -39,22 +51,27 @@ export default function LogIn() {
   }, [location]);
 
   console.log("login", user);
+  const color =
+    location.pathname === "/" ? { color: "white" } : { color: "black" };
+
   return (
     <Toolbar>
       {user ? (
         <div className={classes.profile}>
-          <Typography className={classes.userName} variant="h6">
+          <Typography className={classes.userName} sx={color} variant="h6">
             Hi, {user?.result?.firstName} {user?.result?.lastName}
           </Typography>
           <Link to="/cart" style={{ textDecoration: "none" }}>
-            <IconButton sx={{ color: "black" }}>
-              <LocalMallOutlinedIcon />
+            <IconButton sx={color}>
+              <Badge sx={color} badgeContent={totalQuantity}>
+                <LocalMallOutlinedIcon />
+              </Badge>
             </IconButton>
           </Link>
           <Button
             variant="outlined"
             color="inherit"
-            sx={{ color: "black" }}
+            sx={color}
             onClick={logout}
           >
             Logout
@@ -66,7 +83,7 @@ export default function LogIn() {
             <Button
               variant="outlined"
               color="inherit"
-              sx={{ color: "black" }}
+              sx={color}
               startIcon={<AccountBoxOutlinedIcon />}
             >
               Sign In
