@@ -16,9 +16,9 @@ export function getCart(cart: CartProduct[]): GetCartAction {
 }
 
 export const fetchCartRequest =
-  (userId: string) => async (dispatch: Dispatch) => {
+  (token: string, userId: string) => async (dispatch: Dispatch) => {
     try {
-      const { data } = await fetchCart(userId);
+      const { data } = await fetchCart(token, userId);
       dispatch(getCart(data));
     } catch (error) {
       console.log(error);
@@ -26,10 +26,16 @@ export const fetchCartRequest =
   };
 
 export const manageCartRequest =
-  (userId: string, productId: string | undefined, isIncreased: boolean) =>
+  (
+    token: string | null,
+    userId: string,
+    productId: string | undefined,
+    isIncreased: boolean
+  ) =>
   async (dispatch: Dispatch) => {
     try {
       const { data } = await manageProductInCart(
+        token,
         userId,
         productId,
         isIncreased
@@ -41,10 +47,10 @@ export const manageCartRequest =
   };
 
 export const deleteCartRequest =
-  (userId: string, productId: string | undefined) =>
+  (token: string | null, userId: string, productId: string | undefined) =>
   async (dispatch: Dispatch) => {
     try {
-      const { data } = await deleteProductInCart(userId, productId);
+      const { data } = await deleteProductInCart(token, userId, productId);
       dispatch(getCart(data));
     } catch (error) {
       console.log(error);

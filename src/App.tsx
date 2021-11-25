@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar";
 import Products from "./components/Products";
 import ProductDetails from "./components/Products/ProductCard/ProductDetail";
 import SideDrawer from "./components/SideDrawer";
+import UserCart from "./components/UserCart";
 import { getProducts } from "./redux/actions";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route exact path="/products" render={() => <SideDrawer />} />
           <Route exact path="/products" render={() => <Products />} />
           <Route exact path="/auth" render={() => <Auth />} />
+          <Route exact path="/cart" render={() => <UserCart />} />
           <Route
             exact
             path="/products/:productId"

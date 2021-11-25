@@ -8,7 +8,7 @@ import decode from "jwt-decode";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 
 import useStyles from "./style";
-import { logOut } from "../../../redux/actions";
+import { fetchCartRequest, logOut } from "../../../redux/actions";
 
 export default function LogIn() {
   const classes = useStyles();
@@ -35,6 +35,7 @@ export default function LogIn() {
     }
 
     setUser(JSON.parse(localStorage.getItem("profile") || "null"));
+    dispatch(fetchCartRequest(token, user?.result?._id));
   }, [location]);
 
   console.log("login", user);
@@ -45,9 +46,11 @@ export default function LogIn() {
           <Typography className={classes.userName} variant="h6">
             Hi, {user?.result?.firstName} {user?.result?.lastName}
           </Typography>
-          <IconButton sx={{ color: "black" }}>
-            <LocalMallOutlinedIcon />
-          </IconButton>
+          <Link to="/cart" style={{ textDecoration: "none" }}>
+            <IconButton sx={{ color: "black" }}>
+              <LocalMallOutlinedIcon />
+            </IconButton>
+          </Link>
           <Button
             variant="outlined"
             color="inherit"

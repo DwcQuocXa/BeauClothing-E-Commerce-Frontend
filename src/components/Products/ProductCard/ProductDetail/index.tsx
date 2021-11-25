@@ -2,10 +2,12 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { CircularProgress, Grid, Typography, Button } from "@mui/material";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import { useDispatch } from "react-redux";
 
 import { useAppSelector } from "../../../../hooks/useAppDispatchAndSelector";
 import useStyles from "./style";
 import ExpandBtn from "./ExpandBtn";
+import { manageCartRequest } from "../../../../redux/actions";
 
 type ProductParam = {
   productId: string;
@@ -16,6 +18,14 @@ const ProductDetails = () => {
   const products = useAppSelector((state) => state.products.productsList);
   const { productId } = useParams<ProductParam>();
   const product = products.find((product) => product._id === productId);
+  const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("profile") || "null");
+
+  const addToCart = () => {
+    dispatch(
+      manageCartRequest(user?.token, user?.result?._id, productId, true)
+    );
+  };
 
   return (
     <div className={classes.root}>
@@ -52,6 +62,7 @@ const ProductDetails = () => {
               variant="contained"
               color="secondary"
               className={classes.button}
+              onClick={addToCart}
             >
               <ShoppingBagOutlinedIcon />
               Add
