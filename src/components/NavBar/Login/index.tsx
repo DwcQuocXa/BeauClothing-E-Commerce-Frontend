@@ -13,16 +13,23 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import decode from "jwt-decode";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
+import AddIcon from "@mui/icons-material/Add";
 
 import useStyles from "./style";
 import { fetchCartRequest, logOut } from "../../../redux/actions";
 import { useAppSelector } from "../../../hooks/useAppDispatchAndSelector";
+import ProductForm from "../../ProductForm";
 
 export default function LogIn() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const [user, setUser] = useState<any>(
     JSON.parse(localStorage.getItem("profile") || "null")
   );
@@ -61,8 +68,17 @@ export default function LogIn() {
           <Typography className={classes.userName} sx={color} variant="h6">
             Hi, {user?.result?.firstName} {user?.result?.lastName}
           </Typography>
+          {user?.result?.isAdmin && (
+            <div>
+              <IconButton sx={color} onClick={handleOpen}>
+                <AddIcon />
+              </IconButton>
+            </div>
+          )}
+          <ProductForm open={open} handleClose={handleClose} />
+
           <Link to="/cart" style={{ textDecoration: "none" }}>
-            <IconButton sx={color}>
+            <IconButton>
               <Badge sx={color} badgeContent={totalQuantity}>
                 <LocalMallOutlinedIcon />
               </Badge>
