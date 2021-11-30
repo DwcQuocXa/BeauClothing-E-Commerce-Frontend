@@ -119,3 +119,16 @@ export type GetCartAction = {
 export type CartState = {
   cart: CartProduct[];
 };
+
+//FORMIK
+
+export type FormikType = {
+  name: string;
+  description: string;
+  categories: string;
+  sizes: string[];
+  price: number;
+  img: string[];
+  img1: string;
+  img2: string;
+};

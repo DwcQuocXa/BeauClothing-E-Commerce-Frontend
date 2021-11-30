@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Box,
@@ -19,38 +19,28 @@ import {
 import { useFormik, Formik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 import useStyles from "./style";
 import { createProduct } from "../../redux/api/Product";
-import { API } from "../../types";
+import { API, FormikType, Product } from "../../types";
+import { useAppSelector } from "../../hooks/useAppDispatchAndSelector";
 
 type ProductFormProps = {
   open: boolean;
   handleClose: () => void;
+  onSubmit: (values: FormikType) => Promise<void>;
+  product?: Product;
 };
 
-type FormikType = {
-  name: string;
-  description: string;
-  categories: string;
-  sizes: string[];
-  price: number;
-  img: string[];
-  img1: string;
-  img2: string;
-};
-
-const ProductForm = ({ open, handleClose }: ProductFormProps) => {
+const ProductForm = ({
+  open,
+  handleClose,
+  onSubmit,
+  product,
+}: ProductFormProps) => {
   const classes = useStyles();
-  const user = JSON.parse(localStorage.getItem("profile") || "null");
-
-  const config = {
-    headers: {
-      Authorization: `Bearer ${user?.token}`,
-    },
-  };
-
-  const initialValues = {
+  const [initialValues, setInitialValues] = useState({
     name: "",
     description: "",
     categories: "",
@@ -59,19 +49,25 @@ const ProductForm = ({ open, handleClose }: ProductFormProps) => {
     img1: "",
     img2: "",
     price: 0,
-  };
+  });
 
-  const onSubmit = async (values: FormikType) => {
-    console.log("formik", values);
-    values.price = Number(values.price);
-    values.img.push(values.img1, values.img2);
-    const { img1, img2, ...rest } = values;
+  // console.log(product);
 
-    console.log("valuesToSend", rest);
-    let res = await API.post(`/admin/products`, rest, config);
-    console.log(config);
-    console.log(res.data);
-  };
+  useEffect(() => {
+    if (product)
+      setInitialValues({
+        name: product.name,
+        description: product.description,
+        categories: product.categories,
+        sizes: ["XS", "S", "M", "L", "XL"],
+        img: [],
+        img1: product.img[0],
+        img2: product.img[1],
+        price: product.price,
+      });
+  }, [product]);
+
+  console.log(initialValues);
 
   return (
     <div>
@@ -83,7 +79,7 @@ const ProductForm = ({ open, handleClose }: ProductFormProps) => {
       >
         <Paper className={classes.modalPaper}>
           <Typography variant="h4" className={classes.title}>
-            Creat a product
+            Product
           </Typography>
           <Formik
             initialValues={initialValues}
@@ -98,6 +94,7 @@ const ProductForm = ({ open, handleClose }: ProductFormProps) => {
                       <TextField
                         id="name"
                         name="name"
+                        value={values.name}
                         onChange={handleChange}
                         label="Name"
                         variant="outlined"
@@ -109,6 +106,7 @@ const ProductForm = ({ open, handleClose }: ProductFormProps) => {
                       <TextField
                         id="description"
                         name="description"
+                        value={values.description}
                         onChange={handleChange}
                         label="Description"
                         variant="outlined"
@@ -120,6 +118,7 @@ const ProductForm = ({ open, handleClose }: ProductFormProps) => {
                       <TextField
                         id="img1"
                         name="img1"
+                        value={values.img1}
                         onChange={handleChange}
                         label="ImageURL1"
                         variant="outlined"
@@ -131,6 +130,7 @@ const ProductForm = ({ open, handleClose }: ProductFormProps) => {
                       <TextField
                         id="img2"
                         name="img2"
+                        value={values.img2}
                         onChange={handleChange}
                         label="ImageURL2"
                         variant="outlined"
@@ -162,6 +162,7 @@ const ProductForm = ({ open, handleClose }: ProductFormProps) => {
                       <TextField
                         id="price"
                         name="price"
+                        value={values.price}
                         onChange={handleChange}
                         label="Price"
                         variant="outlined"

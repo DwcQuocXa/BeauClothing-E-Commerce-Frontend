@@ -19,6 +19,7 @@ import useStyles from "./style";
 import { fetchCartRequest, logOut } from "../../../redux/actions";
 import { useAppSelector } from "../../../hooks/useAppDispatchAndSelector";
 import ProductForm from "../../ProductForm";
+import { API, FormikType } from "../../../types";
 
 export default function LogIn() {
   const classes = useStyles();
@@ -29,6 +30,19 @@ export default function LogIn() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const onSubmitCreate = async (values: FormikType) => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user?.token}`,
+      },
+    };
+
+    values.price = Number(values.price);
+    values.img.push(values.img1, values.img2);
+    const { img1, img2, ...rest } = values;
+    await API.post(`/admin/products`, rest, config);
+    handleClose();
+  };
 
   const [user, setUser] = useState<any>(
     JSON.parse(localStorage.getItem("profile") || "null")
@@ -75,7 +89,11 @@ export default function LogIn() {
               </IconButton>
             </div>
           )}
-          <ProductForm open={open} handleClose={handleClose} />
+          <ProductForm
+            open={open}
+            handleClose={handleClose}
+            onSubmit={onSubmitCreate}
+          />
 
           <Link to="/cart" style={{ textDecoration: "none" }}>
             <IconButton>
