@@ -24,6 +24,17 @@ export type Product = {
   _id: string;
 };
 
+export type User = {
+  _id: string;
+  isAdmin?: boolean;
+  isBanned?: boolean;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  cart: CartProduct[];
+};
+
 export type SetProductsAction = {
   type: typeof SET_ALL_PRODUCTS;
   payload: {

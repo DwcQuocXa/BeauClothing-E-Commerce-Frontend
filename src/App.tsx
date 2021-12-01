@@ -10,6 +10,7 @@ import Products from "./components/Products";
 import ProductDetails from "./components/Products/ProductCard/ProductDetail";
 import SideDrawer from "./components/SideDrawer";
 import UserCart from "./components/UserCart";
+import UserList from "./components/UserList";
 import { getProducts } from "./redux/actions";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
             path="/products/:productId"
             render={() => <ProductDetails />}
           />
+          <Route exact path="/users" render={() => <UserList />} />
         </Box>
       </Switch>
     </BrowserRouter>

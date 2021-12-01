@@ -1,9 +1,7 @@
-import { Button, Container, Grid, Grow, Typography } from "@mui/material";
+import { Container, Grid, Grow, Typography } from "@mui/material";
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { useAppSelector } from "../../hooks/useAppDispatchAndSelector";
 
-import { CartProduct } from "../../types";
 import CartProducts from "./CartProducts";
 import CheckOut from "./CheckOut";
 import useStyles from "./style";

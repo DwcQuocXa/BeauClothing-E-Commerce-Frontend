@@ -5,7 +5,6 @@ export default makeStyles(() => ({
   profile: {
     display: "flex",
     justifyContent: "space-between",
-    width: "300px",
   },
   userName: {
     display: "flex",
@@ -14,5 +13,9 @@ export default makeStyles(() => ({
   purple: {
     //color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
+  },
+  adminBtn: {
+    display: "flex",
+    justifyContent: "space-between",
   },
 }));

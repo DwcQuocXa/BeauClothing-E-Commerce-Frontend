@@ -1,5 +1,6 @@
-import React, { useReducer, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+/* eslint-disable no-restricted-globals */
+import React, { useEffect, useReducer, useState } from "react";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { CircularProgress, Grid, Typography, Button } from "@mui/material";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useDispatch } from "react-redux";
@@ -9,7 +10,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useAppSelector } from "../../../../hooks/useAppDispatchAndSelector";
 import useStyles from "./style";
 import ExpandBtn from "./ExpandBtn";
-import { manageCartRequest } from "../../../../redux/actions";
+import { getProducts, manageCartRequest } from "../../../../redux/actions";
 import { API, FormikType } from "../../../../types";
 import ProductForm from "../../../ProductForm";
 
@@ -25,6 +26,9 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("profile") || "null");
   const history = useHistory();
+  const location = useLocation();
+
+  console.log(product);
 
   const addToCart = () => {
     dispatch(
@@ -48,6 +52,7 @@ const ProductDetails = () => {
     const { img1, img2, ...rest } = values;
     await API.put(`/admin/products/${productId}`, rest, config);
     handleClose();
+    window.location.reload();
   };
 
   const onSubmitDelete = async () => {
@@ -59,6 +64,7 @@ const ProductDetails = () => {
 
     await API.delete(`/admin/products/${productId}`, config);
     history.push(`/`);
+    window.location.reload();
   };
 
   return (

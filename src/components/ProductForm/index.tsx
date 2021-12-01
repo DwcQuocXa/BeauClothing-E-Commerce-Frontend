@@ -1,30 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import {
-  Box,
   Button,
-  Container,
   Grid,
   Modal,
   Typography,
   Paper,
   TextField,
-  RadioGroup,
-  Radio,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
 } from "@mui/material";
-import { useFormik, Formik } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
-import { useParams } from "react-router-dom";
 
 import useStyles from "./style";
-import { createProduct } from "../../redux/api/Product";
-import { API, FormikType, Product } from "../../types";
-import { useAppSelector } from "../../hooks/useAppDispatchAndSelector";
+import { FormikType, Product } from "../../types";
 
 type ProductFormProps = {
   open: boolean;
