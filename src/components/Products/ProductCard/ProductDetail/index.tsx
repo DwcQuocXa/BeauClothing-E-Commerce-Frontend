@@ -1,5 +1,4 @@
-/* eslint-disable no-restricted-globals */
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { CircularProgress, Grid, Typography, Button } from "@mui/material";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
@@ -10,7 +9,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useAppSelector } from "../../../../hooks/useAppDispatchAndSelector";
 import useStyles from "./style";
 import ExpandBtn from "./ExpandBtn";
-import { getProducts, manageCartRequest } from "../../../../redux/actions";
+import { manageCartRequest } from "../../../../redux/actions";
 import { API, FormikType } from "../../../../types";
 import ProductForm from "../../../ProductForm";
 
@@ -98,47 +97,49 @@ const ProductDetails = () => {
               <ExpandBtn product={product} />
             </div>
             <br />
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  className={classes.button}
-                  onClick={addToCart}
-                >
-                  <ShoppingBagOutlinedIcon />
-                  Add
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  className={classes.button}
-                  onClick={handleOpen}
-                >
-                  <BuildIcon />
-                  Update
-                </Button>
-              </Grid>
-              <ProductForm
-                open={open}
-                handleClose={handleClose}
-                onSubmit={onSubmitUpdate}
-                product={product}
-              />
-              <Grid item xs={6}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  className={classes.button}
-                  onClick={onSubmitDelete}
-                >
-                  <DeleteOutlineIcon />
-                  Remove
-                </Button>
-              </Grid>
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                onClick={addToCart}
+              >
+                <ShoppingBagOutlinedIcon />
+                Add
+              </Button>
             </Grid>
+            {user?.result?.isAdmin && (
+              <Grid container spacing={2} sx={{ paddingTop: 2 }}>
+                <Grid item xs={6}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    onClick={handleOpen}
+                  >
+                    <BuildIcon />
+                    Update
+                  </Button>
+                </Grid>
+                <ProductForm
+                  open={open}
+                  handleClose={handleClose}
+                  onSubmit={onSubmitUpdate}
+                  product={product}
+                />
+                <Grid item xs={6}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    onClick={onSubmitDelete}
+                  >
+                    <DeleteOutlineIcon />
+                    Remove
+                  </Button>
+                </Grid>
+              </Grid>
+            )}
           </Grid>
         </Grid>
       )}
