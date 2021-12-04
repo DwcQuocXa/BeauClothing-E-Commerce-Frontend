@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { CircularProgress, Grid, Typography, Button } from "@mui/material";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useDispatch } from "react-redux";
@@ -25,7 +25,6 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("profile") || "null");
   const history = useHistory();
-  const location = useLocation();
 
   console.log(product);
 
