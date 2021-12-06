@@ -12,6 +12,7 @@ import ExpandBtn from "./ExpandBtn";
 import { manageCartRequest } from "../../../../redux/actions";
 import { API, FormikType } from "../../../../types";
 import ProductForm from "../../../ProductForm";
+import RemoveModal from "./RemoveModal";
 
 type ProductParam = {
   productId: string;
@@ -19,6 +20,8 @@ type ProductParam = {
 
 const ProductDetails = () => {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [removeModal, setRemoveModal] = useState(false);
   const products = useAppSelector((state) => state.products.productsList);
   const { productId } = useParams<ProductParam>();
   const product = products.find((product) => product._id === productId);
@@ -34,7 +37,6 @@ const ProductDetails = () => {
     );
   };
 
-  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -131,12 +133,17 @@ const ProductDetails = () => {
                     variant="contained"
                     color="secondary"
                     className={classes.button}
-                    onClick={onSubmitDelete}
+                    onClick={() => setRemoveModal(true)}
                   >
                     <DeleteOutlineIcon />
                     Remove
                   </Button>
                 </Grid>
+                <RemoveModal
+                  removeModal={removeModal}
+                  setRemoveModal={setRemoveModal}
+                  onSubmitDelete={onSubmitDelete}
+                />
               </Grid>
             )}
           </Grid>
