@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Avatar,
   Button,
@@ -8,7 +8,6 @@ import {
   Container,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -20,8 +19,9 @@ import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
 } from "react-google-login";
-import { baseURL, FormData } from "../../types";
+import { API, baseURL, FormData } from "../../types";
 import { sendSignUpRequest, sendSignInRequest } from "../../redux/actions/auth";
+import axios from "axios";
 
 const Auth = () => {
   const classes = useStyle();
@@ -65,18 +65,25 @@ const Auth = () => {
   const googleSuccess = async (
     response: GoogleLoginResponse | GoogleLoginResponseOffline | any
   ) => {
-    const result = (response as GoogleLoginResponse)?.profileObj;
-    const id_token = (response as any)?.tokenObj.id_token;
-    console.log("result", result);
-    console.log(id_token);
-    let res = await axios.post(`${baseURL}/users/google-authenticate`, {
-      id_token: response.tokenObj.id_token,
-    });
-    console.log(res);
+    const profile = (response as GoogleLoginResponse)?.profileObj;
+    const result = { ...profile, _id: profile?.googleId };
+    const token = (response as any)?.tokenId;
     try {
-      console.log("result", result);
-      console.log(id_token);
-      //console.log(res);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      await API.post(`/auth/google-authenticate`, { result, token }, config);
+
+      let res = await API.get(`/auth/google-authenticate/${result?.email}`);
+      console.log("res.data", res);
+
+      dispatch({
+        type: "SIGN_IN",
+        payload: { data: { result: res.data, token } },
+      });
+      history.push("/");
     } catch (error) {
       console.log(error);
     }

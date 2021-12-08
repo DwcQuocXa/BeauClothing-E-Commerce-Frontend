@@ -76,7 +76,8 @@ export default function LogIn() {
       {user ? (
         <div className={classes.profile} style={{ width: width }}>
           <Typography className={classes.userName} sx={color} variant="h6">
-            Hi, {user?.result?.firstName} {user?.result?.lastName}
+            Hi, {user?.result?.name}
+            {user?.result?.firstName} {user?.result?.lastName}
           </Typography>
           {user?.result?.isAdmin && (
             <div className={classes.adminBtn}>
