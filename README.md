@@ -33,7 +33,7 @@
 - Passport
 - Well-tested unit tests with Jest
 
-# Images from Admin Dashboard
+# Images from Admin Features
 
 ![Admin Create Product](./readmeImg/Create_Product.PNG)
 
