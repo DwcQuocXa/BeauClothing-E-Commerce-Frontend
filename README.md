@@ -12,7 +12,7 @@
 - Remain logged-in while refresh with JWT token and Local Storage
 - User can add items to Cart
 - User can increase/decrease the quantity of an item in Cart
-- User can delete items in Cart
+- User can delete items in the Cart
 - Admin can create new items
 - Admin can ban an user, make that user can no longer log in to the system
 
