@@ -1,6 +1,6 @@
 # BeauClothing-E-Commerce-Backend# WEAR E-Commerce Clothing Site
 
-- A well-designed MERN(MongoDB, Express.js, React, Node.js) Stack Application E-Commerce website in clothing fashion inspired by H&M.
+- A MERN Stack Application E-Commerce website in clothing fashion inspired by H&M.
 - Demo link: https://beau-ecommerce-project-duc-ngo.netlify.app/
 - Link to Backend source code: https://github.com/DwcQuocXa/BeauClothing-E-Commerce-Backend
 
